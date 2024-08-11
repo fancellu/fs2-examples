@@ -9,4 +9,3 @@ lazy val root = (project in file("."))
 
 libraryDependencies += "co.fs2" %% "fs2-core" % "3.10.2"
 libraryDependencies += "co.fs2" %% "fs2-io" % "3.10.2"
-libraryDependencies += "co.fs2" %% "fs2-io" % "3.10.2"

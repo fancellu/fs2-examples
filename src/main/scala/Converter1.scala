@@ -24,15 +24,30 @@ object Converter1 extends IOApp.Simple:
         .through(text.utf8.encode)
         .through(stderr[IO]())
 
-    val inout: Stream[IO, String] = Files[IO]
-      .readUtf8Lines(Path("testdata/fahrenheit.txt"))
-      .handleErrorWith(handleError) // Handle potential errors here
-      .collect { case Fahrenheit(double) =>
-        f"${f2c(double)}%.2f"
-      }
+    val files: List[Path] =
+      List(
+        Path("testdata/fahrenheit.txt"), // read in
+        Path("testdata/filenotfound.txt"), // error: file not found
+        Path("testdata/fahrenheit2.txt") // read in
+      )
+
+    val inout: List[Stream[IO, String]] = files.map { file =>
+      Files[IO]
+        .readUtf8Lines(file)
+        .handleErrorWith(handleError) // Handle potential errors here
+        .collect { case Fahrenheit(double) =>
+          f"${f2c(double)}%.2f"
+        }
+    }
+
+    // This is how we flatten the list of streams into a single stream
+    val inoutFlattened: Stream[IO, String] = inout.fold(Stream.empty) {
+      (acc, stream) =>
+        acc ++ stream
+    }
 
     // I prepend a header line before the converted values
-    (Stream.emit("// celsius values") ++ inout)
+    (Stream.emit("// celsius values") ++ inoutFlattened)
       .intersperse("\n")
       .through(text.utf8.encode)
       .through(stdout[IO]())
