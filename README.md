@@ -6,7 +6,7 @@ A couple of fs2 examples
 
 Converts from Fahrenheit file to stdout in Celsius
 
-- Parses multiple inout files
+- Parses multiple input files
 - Handles empty lines, comments, non doubles, missing files
 - Formats to 2 decimal places
 - Prepends with a header line
