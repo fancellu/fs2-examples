@@ -1,6 +1,6 @@
 # FS2 examples
 
-A few of fs2 examples
+A few fs2 examples
 
 ## Converter1
 
