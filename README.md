@@ -1,6 +1,6 @@
 # FS2 examples
 
-A couple of fs2 examples
+A few of fs2 examples
 
 ## Converter1
 
@@ -13,4 +13,10 @@ Converts from Fahrenheit file to stdout in Celsius
 
 ## WindowedAverage
 
-- Emits a windowed running average of the last 5 values 
+- Emits a windowed running average of the last 5 values
+
+## QueueExample
+
+- Creates stream that emits incrementing int every 100ms to a queue
+- Creates stream that reads int from queue and adds int to ref
+- Runs both at the same time, terminating after 1 second, printing out the ref sum
