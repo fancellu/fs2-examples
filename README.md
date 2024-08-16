@@ -20,3 +20,10 @@ Converts from Fahrenheit file to stdout in Celsius
 - Creates stream that emits incrementing int every 100ms to a queue
 - Creates stream that reads int from queue and adds int to ref
 - Runs both at the same time, terminating after 1 second, printing out the ref sum
+
+## EchoServer
+
+- Listens for telnet to port 5555, 2 concurrent connections
+- Echos commands back to user
+- "EXIT" will say "Byebye!" and terminate their connection
+- "KILLSERVER" will terminate the server
