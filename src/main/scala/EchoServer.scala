@@ -4,6 +4,7 @@ import cats.effect.std.Console
 import cats.syntax.all.*
 import com.comcast.ip4s.*
 import fs2.io.net.Network
+import fs2.concurrent.SignallingRef
 
 object EchoServer extends IOApp.Simple:
 
@@ -52,20 +53,42 @@ object EchoServer extends IOApp.Simple:
               ++ Stream.empty // close the client socket
         }
 
-  private def echoServer[F[_]: Concurrent: Network: Console] =
+  private def echoServer[F[_]: Concurrent: Network: Console](
+      serverExitSignal: SignallingRef[F, Boolean]
+  ) =
     Network[F]
       .server(port = Some(port"5555"))
       .map(handleClient[F])
       .parJoin(2) // max number of concurrent connections
+      .interruptWhen(serverExitSignal)
       .handleErrorWith { case KillServerException =>
         Stream.eval(
           Console[F].println("Server terminated by user")
         ) ++ Stream.empty // closes the server
       }
 
+  // We signal the server to exit by setting the signalling ref upon "KILLSERVER"
+  private def repl[F[_]: Sync: Console](
+      serverExitSignal: SignallingRef[F, Boolean]
+  ): F[Unit] =
+    def loop: F[Unit] = for
+      _ <- Console[F].println(">>> ")
+      input <- Console[F].readLine
+      _ <-
+        if input == "KILLSERVER" then
+          serverExitSignal
+            .set(true) *> Console[F].println("Server told to exit")
+        else Console[F].println(s"You entered: $input") *> loop
+    yield ()
+
+    loop
+
   override def run: IO[Unit] =
     for
       _ <- IO.println("Hello, this is a simple echo server")
-      server <- echoServer[IO].compile.drain
+      serverExitSignal <- SignallingRef.apply[IO, Boolean](false)
+      // We spin up the repl, which signals the server to exit
+      _ <- repl(serverExitSignal).start
+      _ <- echoServer[IO](serverExitSignal).compile.drain
       _ <- IO.println("Server exiting")
     yield ()
