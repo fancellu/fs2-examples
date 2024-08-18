@@ -27,3 +27,9 @@ Converts from Fahrenheit file to stdout in Celsius
 - Echos commands back to user
 - "EXIT" will say "Byebye!" and terminate their connection
 - "KILLSERVER" will terminate the server
+
+## REPL
+
+- A simple REPL example
+- Echos in the input from stdin
+- Exits loop upon "KILLSERVER" or EOF signal 
