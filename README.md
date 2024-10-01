@@ -1,8 +1,8 @@
-# FS2 examples
+# FS2 examples (And ZIO too!)
 
-A few fs2 examples
+A few fs2/zio examples
 
-## Converter1
+## Converter1 (Also a ZIO version)
 
 Converts from Fahrenheit file to stdout in Celsius
 
@@ -11,11 +11,11 @@ Converts from Fahrenheit file to stdout in Celsius
 - Formats to 2 decimal places
 - Prepends with a header line
 
-## WindowedAverage
+## WindowedAverage (Also a ZIO version)
 
 - Emits a windowed running average of the last 5 values
 
-## QueueExample
+## QueueExample (Also a ZIO version)
 
 - Creates stream that emits incrementing int every 100ms to a queue
 - Creates stream that reads int from queue and adds int to ref
@@ -29,7 +29,7 @@ Converts from Fahrenheit file to stdout in Celsius
 - "KILLSERVER" will terminate the server
 - Also spins up a REPL, so we can kill server cleanly from console, via SignallingRef
 
-## REPL
+## REPL  (Also a ZIO version)
 
 - A simple REPL example
 - Echos in the input from stdin

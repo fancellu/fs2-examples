@@ -7,5 +7,16 @@ lazy val root = (project in file("."))
     name := "fs2stuff"
   )
 
-libraryDependencies += "co.fs2" %% "fs2-core" % "3.10.2"
-libraryDependencies += "co.fs2" %% "fs2-io" % "3.10.2"
+val fs2Version = "3.10.2"
+
+val zioVersion = "2.1.9"
+
+libraryDependencies ++= Seq(
+  // fs2
+  "co.fs2" %% "fs2-core" % fs2Version,
+  "co.fs2" %% "fs2-io" % fs2Version,
+  // zio
+  "dev.zio" %% "zio" % zioVersion,
+  "dev.zio" %% "zio-streams" % zioVersion,
+  "dev.zio" %% "zio-nio" % "2.0.2"
+)
