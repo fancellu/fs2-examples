@@ -2,6 +2,10 @@
 
 A few fs2/zio examples
 
+## Tutorial
+
+[Tutorial](tutorial/index.md)
+
 ## Converter1 (Also a ZIO version)
 
 Converts from Fahrenheit file to stdout in Celsius
@@ -33,4 +37,4 @@ Converts from Fahrenheit file to stdout in Celsius
 
 - A simple REPL example
 - Echos in the input from stdin
-- Exits loop upon "KILLSERVER" or EOF signal 
+- Exits loop upon "KILLSERVER" or EOF signal
